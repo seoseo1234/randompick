@@ -35,18 +35,16 @@ export const StudentManager: React.FC<Props> = ({ onClose, state, addStudent, ad
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content glass-panel" onClick={e => e.stopPropagation()}>
         <button className="close-btn" onClick={onClose}>&times;</button>
-        <h2 style={{ fontFamily: 'Jua', marginBottom: '20px', color: '#ff6b6b' }}>📝 학생 명단 관리</h2>
+        <h2 style={{ fontFamily: 'Jua', marginBottom: '20px', color: '#ff4757', textShadow: '0 1px 3px rgba(0,0,0,0.3)' }}>📝 학생 명단 관리</h2>
 
         <div style={{ marginBottom: '20px' }}>
           <div style={{ display: 'flex', gap: '10px', marginBottom: '15px' }}>
             <button 
               className={`btn-secondary ${!isBulkMode ? '' : 'btn-outline'}`}
-              style={isBulkMode ? { background: '#f1f2f6', color: '#2f3542' } : {}}
               onClick={() => setIsBulkMode(false)}
             >한 명씩 추가</button>
             <button 
               className={`btn-secondary ${isBulkMode ? '' : 'btn-outline'}`}
-              style={!isBulkMode ? { background: '#f1f2f6', color: '#2f3542' } : {}}
               onClick={() => setIsBulkMode(true)}
             >일괄 추가</button>
           </div>
@@ -75,7 +73,7 @@ export const StudentManager: React.FC<Props> = ({ onClose, state, addStudent, ad
         </div>
 
         <h3 style={{ fontFamily: 'Jua', marginBottom: '10px' }}>현재 명단 ({state.students.length}명)</h3>
-        <div style={{ maxHeight: '200px', overflowY: 'auto', marginBottom: '20px', background: 'rgba(255,255,255,0.5)', padding: '10px', borderRadius: '12px' }}>
+        <div style={{ maxHeight: '200px', overflowY: 'auto', marginBottom: '20px', background: 'rgba(0,0,0,0.2)', padding: '10px', borderRadius: '12px' }}>
           {state.students.length === 0 ? (
             <p style={{ color: '#888', textAlign: 'center' }}>등록된 학생이 없습니다.</p>
           ) : (

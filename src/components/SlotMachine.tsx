@@ -62,7 +62,7 @@ export const SlotMachine: React.FC<Props> = ({ students, picked, isSpinning, onC
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '40px 0' }}>
-      <div className="glass-panel" style={{ display: 'flex', gap: '20px', padding: '30px', background: 'linear-gradient(to bottom, #ff9ff3, #feca57)', border: '5px solid #ff6b6b', borderRadius: '30px', boxShadow: 'inset 0 10px 20px rgba(0,0,0,0.2), 0 15px 30px rgba(0,0,0,0.3)' }}>
+      <div className="glass-panel" style={{ display: 'flex', gap: '20px', padding: '30px', background: 'linear-gradient(to bottom, #2f3640, #353b48)', border: '5px solid #718093', borderRadius: '30px', boxShadow: 'inset 0 10px 20px rgba(0,0,0,0.5), 0 15px 30px rgba(0,0,0,0.5)' }}>
         {students.length === 0 ? (
           <div style={{ fontSize: '2rem', fontFamily: 'Jua', color: 'white' }}>명단을 추가해주세요</div>
         ) : (
@@ -70,7 +70,7 @@ export const SlotMachine: React.FC<Props> = ({ students, picked, isSpinning, onC
             <div key={idx} style={{ 
               width: '120px', 
               height: '150px', 
-              background: 'white', 
+              background: '#f1f2f6', 
               borderRadius: '15px', 
               display: 'flex', 
               alignItems: 'center', 

@@ -60,7 +60,7 @@ function App() {
         studentCount={store.state.students.length}
       />
 
-      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', padding: '20px' }}>
         {mode === 'roulette' && (
           <Roulette students={store.state.students} picked={picked} isSpinning={isSpinning} onComplete={handleComplete} />
         )}
@@ -80,17 +80,18 @@ function App() {
 
           {showResult && (
             <div className="glass-panel" style={{ padding: '20px 40px', textAlign: 'center', animation: 'slideUp 0.5s ease-out' }}>
-              <h2 style={{ fontFamily: 'Jua', color: '#ff4757', marginBottom: '15px', fontSize: '2rem' }}>🎉 당첨자 발표 🎉</h2>
+              <h2 style={{ fontFamily: 'Jua', color: '#ff4757', marginBottom: '15px', fontSize: '2rem', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>🎉 당첨자 발표 🎉</h2>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', justifyContent: 'center' }}>
                 {picked.map((name, i) => (
                   <div key={i} style={{ 
-                    background: '#feca57', 
+                    background: 'rgba(255, 255, 255, 0.1)', 
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
                     padding: '10px 25px', 
                     borderRadius: '20px', 
                     fontFamily: 'Jua', 
                     fontSize: '1.5rem',
-                    color: '#2d3436',
-                    boxShadow: '0 4px 10px rgba(0,0,0,0.1)'
+                    color: '#ffa502',
+                    boxShadow: '0 4px 10px rgba(0,0,0,0.3)'
                   }}>
                     {name}
                   </div>
@@ -105,7 +106,7 @@ function App() {
       </main>
 
       {/* Secret Settings Trigger Icon */}
-      <div className="secret-trigger" onClick={handleSecretClick} title="비밀 모드" />
+      <div className="secret-trigger" onClick={handleSecretClick} title="비밀 모드">⚙️</div>
 
       {/* Modals */}
       {showStudentManager && (

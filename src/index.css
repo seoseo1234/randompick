@@ -1,13 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Jua&family=Nunito:wght@400;700;900&display=swap');
 
 :root {
-  --primary-color: #ff6b6b;
-  --secondary-color: #4ecdc4;
-  --accent-color: #ffe66d;
-  --bg-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-  --text-color: #2d3436;
-  --card-bg: rgba(255, 255, 255, 0.85);
-  --glass-border: rgba(255, 255, 255, 0.4);
+  --primary-color: #ff4757;
+  --secondary-color: #3742fa;
+  --accent-color: #ffa502;
+  /* Dark mode gradient */
+  --bg-gradient: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+  --text-color: #f1f2f6;
+  --text-muted: #a4b0be;
+  
+  /* Modern Glassmorphism (Dark) */
+  --card-bg: rgba(15, 23, 42, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-highlight: rgba(255, 255, 255, 0.05);
 }
 
 * {
@@ -29,16 +34,18 @@ body {
 /* Glassmorphism utility */
 .glass-panel {
   background: var(--card-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
 }
 
 /* Buttons */
 .btn-primary {
-  background: var(--primary-color);
+  background: linear-gradient(135deg, #ff4757, #ff6b81);
   color: white;
   border: none;
   border-radius: 50px;
@@ -47,39 +54,51 @@ body {
   font-family: 'Jua', sans-serif;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+  box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
 .btn-primary:hover:not(:disabled) {
   transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+  box-shadow: 0 6px 20px rgba(255, 71, 87, 0.6);
 }
 
 .btn-primary:active:not(:disabled) {
   transform: translateY(1px);
 }
 .btn-primary:disabled {
-  background: #ccc;
+  background: #57606f;
   box-shadow: none;
+  color: #a4b0be;
   cursor: not-allowed;
 }
 
 .btn-secondary {
-  background: var(--secondary-color);
+  background: var(--card-bg);
   color: white;
-  border: none;
+  border: 1px solid var(--glass-border);
   border-radius: 50px;
   padding: 10px 20px;
   font-size: 1rem;
   font-family: 'Jua', sans-serif;
   cursor: pointer;
   transition: all 0.2s;
-  box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
+  backdrop-filter: blur(5px);
 }
 
 .btn-secondary:hover {
+  background: rgba(255,255,255,0.1);
   transform: translateY(-2px);
-  filter: brightness(1.1);
+  border-color: rgba(255,255,255,0.3);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid transparent;
+}
+.btn-outline:hover {
+  color: white;
 }
 
 .btn-danger {
@@ -104,8 +123,8 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(5px);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -131,65 +150,67 @@ body {
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: #666;
+  color: var(--text-muted);
   transition: color 0.2s;
 }
 .close-btn:hover {
-  color: #000;
+  color: white;
 }
 
 /* Hidden Icon */
 .secret-trigger {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 40px;
-  height: 40px;
-  opacity: 0;
+  bottom: 10px;
+  right: 15px;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.03); /* Barely visible */
   cursor: pointer;
   z-index: 999;
+  user-select: none;
+  transition: color 0.3s;
 }
 .secret-trigger:hover {
-  opacity: 0.1;
-  background: rgba(255,255,255,0.5);
-  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.2);
 }
 
 /* Input Fields */
-input[type="text"], input[type="number"], textarea {
+input[type="text"], input[type="number"], textarea, select {
   width: 100%;
   padding: 12px 15px;
-  border: 2px solid #e0e0e0;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--glass-border);
   border-radius: 12px;
+  color: white;
   font-family: 'Nunito', sans-serif;
   font-size: 1rem;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, background 0.2s;
 }
-input[type="text"]:focus, input[type="number"]:focus, textarea:focus {
-  border-color: var(--secondary-color);
+input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
+  border-color: var(--accent-color);
+  background: rgba(0, 0, 0, 0.4);
 }
-select {
-  padding: 10px 15px;
-  border-radius: 12px;
-  border: 2px solid #e0e0e0;
-  font-family: 'Jua', sans-serif;
-  font-size: 1rem;
-  outline: none;
-  cursor: pointer;
+input::placeholder, textarea::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+select option {
+  background: #2f3542;
+  color: white;
 }
 
 /* Badges / Tags */
 .student-tag {
   display: inline-flex;
   align-items: center;
-  background: #f1f2f6;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 5px 12px;
   border-radius: 20px;
   margin: 5px;
   font-size: 1.1rem;
-  color: #2f3542;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  color: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 .student-tag button {
   background: none;
@@ -198,6 +219,21 @@ select {
   color: #ff4757;
   cursor: pointer;
   font-weight: bold;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 @keyframes fadeIn {

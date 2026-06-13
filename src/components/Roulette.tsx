@@ -43,7 +43,7 @@ export const Roulette: React.FC<Props> = ({ students, picked, isSpinning, onComp
       ctx.fillStyle = '#ffffff';
       ctx.fill();
       ctx.fillStyle = '#000000';
-      ctx.font = '20px "Inter", sans-serif';
+      ctx.font = '20px "Paperozi", sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText('명단을 추가해주세요', centerX, centerY);
@@ -76,7 +76,7 @@ export const Roulette: React.FC<Props> = ({ students, picked, isSpinning, onComp
       ctx.rotate(startAngle + sliceAngle / 2);
       ctx.textAlign = 'right';
       ctx.fillStyle = '#000000';
-      ctx.font = '600 20px "Inter", sans-serif';
+      ctx.font = '600 20px "Paperozi", sans-serif';
       ctx.fillText(students[i], radius - 20, 5);
       ctx.restore();
     }

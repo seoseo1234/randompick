@@ -33,49 +33,59 @@ export const StudentManager: React.FC<Props> = ({ onClose, state, addStudent, ad
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content glass-panel" onClick={e => e.stopPropagation()}>
+      <div className="modal-content" onClick={e => e.stopPropagation()}>
         <button className="close-btn" onClick={onClose}>&times;</button>
-        <h2 style={{ fontFamily: 'Jua', marginBottom: '20px', color: '#ff4757', textShadow: '0 1px 3px rgba(0,0,0,0.3)' }}>📝 학생 명단 관리</h2>
+        <h2 className="text-headline" style={{ marginBottom: 'var(--space-lg)' }}>명단 관리</h2>
 
-        <div style={{ marginBottom: '20px' }}>
-          <div style={{ display: 'flex', gap: '10px', marginBottom: '15px' }}>
+        <div style={{ marginBottom: 'var(--space-xl)' }}>
+          <div style={{ display: 'flex', gap: 'var(--space-xs)', marginBottom: 'var(--space-md)', background: 'var(--color-surface-soft)', padding: '4px', borderRadius: 'var(--rounded-pill)', width: 'fit-content' }}>
             <button 
-              className={`btn-secondary ${!isBulkMode ? '' : 'btn-outline'}`}
+              className={!isBulkMode ? 'pricing-tab-selected' : 'pricing-tab-default'}
               onClick={() => setIsBulkMode(false)}
             >한 명씩 추가</button>
             <button 
-              className={`btn-secondary ${isBulkMode ? '' : 'btn-outline'}`}
+              className={isBulkMode ? 'pricing-tab-selected' : 'pricing-tab-default'}
               onClick={() => setIsBulkMode(true)}
             >일괄 추가</button>
           </div>
 
           {!isBulkMode ? (
-            <form onSubmit={handleAddSingle} style={{ display: 'flex', gap: '10px' }}>
+            <form onSubmit={handleAddSingle} style={{ display: 'flex', gap: 'var(--space-sm)' }}>
               <input 
                 type="text" 
+                className="text-input"
                 placeholder="학생 이름 입력" 
                 value={singleName} 
                 onChange={e => setSingleName(e.target.value)} 
               />
-              <button type="submit" className="btn-primary" style={{ padding: '10px 20px' }}>추가</button>
+              <button type="submit" className="button-primary">추가</button>
             </form>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-sm)' }}>
               <textarea 
+                className="text-input"
                 rows={4} 
                 placeholder="이름을 줄바꿈이나 쉼표로 구분해서 입력하세요." 
                 value={bulkNames} 
                 onChange={e => setBulkNames(e.target.value)}
               />
-              <button onClick={handleAddBulk} className="btn-primary" style={{ padding: '10px 20px', alignSelf: 'flex-end' }}>일괄 추가</button>
+              <button onClick={handleAddBulk} className="button-primary" style={{ alignSelf: 'flex-end' }}>일괄 추가</button>
             </div>
           )}
         </div>
 
-        <h3 style={{ fontFamily: 'Jua', marginBottom: '10px' }}>현재 명단 ({state.students.length}명)</h3>
-        <div style={{ maxHeight: '200px', overflowY: 'auto', marginBottom: '20px', background: 'rgba(0,0,0,0.2)', padding: '10px', borderRadius: '12px' }}>
+        <h3 className="text-card-title" style={{ marginBottom: 'var(--space-sm)' }}>현재 명단 ({state.students.length}명)</h3>
+        <div style={{ 
+          maxHeight: '200px', 
+          overflowY: 'auto', 
+          marginBottom: 'var(--space-lg)', 
+          background: 'var(--color-surface-soft)', 
+          padding: 'var(--space-sm)', 
+          borderRadius: 'var(--rounded-md)',
+          border: '1px solid var(--color-hairline)'
+        }}>
           {state.students.length === 0 ? (
-            <p style={{ color: '#888', textAlign: 'center' }}>등록된 학생이 없습니다.</p>
+            <p className="text-body-sm" style={{ color: '#888', textAlign: 'center', padding: 'var(--space-md) 0' }}>등록된 학생이 없습니다.</p>
           ) : (
             state.students.map(name => (
               <span key={name} className="student-tag">
@@ -88,7 +98,7 @@ export const StudentManager: React.FC<Props> = ({ onClose, state, addStudent, ad
 
         {state.students.length > 0 && (
           <div style={{ textAlign: 'right' }}>
-            <button className="btn-danger" onClick={() => {
+            <button className="button-secondary" style={{ color: '#ff3d8b' }} onClick={() => {
               if (window.confirm('정말 모든 명단을 삭제하시겠습니까?')) clearStudents();
             }}>전체 삭제</button>
           </div>

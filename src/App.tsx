@@ -21,8 +21,6 @@ function App() {
   const [picked, setPicked] = useState<string[]>([]);
   const [showResult, setShowResult] = useState(false);
 
-  // Hidden icon click counter logic (if we wanted multi-click), 
-  // but PRD requested 1 click on hidden icon.
   const handleSecretClick = () => {
     setShowSecretSettings(true);
   };
@@ -50,7 +48,7 @@ function App() {
   };
 
   return (
-    <div style={{ width: '100vw', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div style={{ width: '100%', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Header 
         mode={mode} 
         setMode={setMode} 
@@ -60,49 +58,49 @@ function App() {
         studentCount={store.state.students.length}
       />
 
-      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', padding: '20px' }}>
-        {mode === 'roulette' && (
-          <Roulette students={store.state.students} picked={picked} isSpinning={isSpinning} onComplete={handleComplete} />
-        )}
-        {mode === 'slot' && (
-          <SlotMachine students={store.state.students} picked={picked} isSpinning={isSpinning} onComplete={handleComplete} />
-        )}
-        {mode === 'fishing' && (
-          <FishingGame students={store.state.students} picked={picked} isSpinning={isSpinning} onComplete={handleComplete} />
-        )}
-
-        <div style={{ marginTop: '20px', minHeight: '100px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          {!isSpinning && !showResult && (
-            <button className="btn-primary" style={{ fontSize: '1.5rem', padding: '15px 40px' }} onClick={handleStart}>
-              {count}명 뽑기 시작!
-            </button>
+      <main style={{ flex: 1, padding: '0 var(--space-xl)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div className="color-block-section">
+          {mode === 'roulette' && (
+            <Roulette students={store.state.students} picked={picked} isSpinning={isSpinning} onComplete={handleComplete} />
+          )}
+          {mode === 'slot' && (
+            <SlotMachine students={store.state.students} picked={picked} isSpinning={isSpinning} onComplete={handleComplete} />
+          )}
+          {mode === 'fishing' && (
+            <FishingGame students={store.state.students} picked={picked} isSpinning={isSpinning} onComplete={handleComplete} />
           )}
 
-          {showResult && (
-            <div className="glass-panel" style={{ padding: '20px 40px', textAlign: 'center', animation: 'slideUp 0.5s ease-out' }}>
-              <h2 style={{ fontFamily: 'Jua', color: '#ff4757', marginBottom: '15px', fontSize: '2rem', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>🎉 당첨자 발표 🎉</h2>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', justifyContent: 'center' }}>
-                {picked.map((name, i) => (
-                  <div key={i} style={{ 
-                    background: 'rgba(255, 255, 255, 0.1)', 
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    padding: '10px 25px', 
-                    borderRadius: '20px', 
-                    fontFamily: 'Jua', 
-                    fontSize: '1.5rem',
-                    color: '#ffa502',
-                    boxShadow: '0 4px 10px rgba(0,0,0,0.3)'
-                  }}>
-                    {name}
-                  </div>
-                ))}
-              </div>
-              <button className="btn-secondary" style={{ marginTop: '20px' }} onClick={() => setShowResult(false)}>
+          <div style={{ marginTop: 'var(--space-xxl)', display: 'flex', justifyContent: 'center' }}>
+            {!isSpinning && !showResult && (
+              <button className="button-primary" onClick={handleStart}>
+                {count}명 뽑기 시작
+              </button>
+            )}
+          </div>
+        </div>
+
+        {showResult && (
+          <div className="color-block-section-lilac" style={{ animation: 'slideUp 0.5s ease-out' }}>
+            <h2 className="text-display-lg" style={{ marginBottom: 'var(--space-lg)', textAlign: 'center' }}>당첨자 발표</h2>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-md)', justifyContent: 'center' }}>
+              {picked.map((name, i) => (
+                <div key={i} className="white-card" style={{ 
+                  padding: 'var(--space-sm) var(--space-lg)', 
+                  borderRadius: 'var(--rounded-pill)',
+                  fontWeight: 600,
+                  fontSize: '24px'
+                }}>
+                  {name}
+                </div>
+              ))}
+            </div>
+            <div style={{ marginTop: 'var(--space-xl)', display: 'flex', justifyContent: 'center' }}>
+              <button className="button-primary" onClick={() => setShowResult(false)}>
                 다시 하기
               </button>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </main>
 
       {/* Secret Settings Trigger Icon */}
@@ -132,3 +130,4 @@ function App() {
 }
 
 export default App;
+

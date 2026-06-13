@@ -14,18 +14,15 @@ export const SlotMachine: React.FC<Props> = ({ students, picked, isSpinning, onC
   useEffect(() => {
     if (students.length === 0) return;
     if (!isSpinning && picked.length === 0) {
-       // Reset state
        setDisplayedNames(Array(1).fill('준비'));
     }
   }, [students, isSpinning, picked]);
 
   useEffect(() => {
     if (isSpinning) {
-      // Start spinning
       setDisplayedNames(Array(picked.length).fill('🎰'));
       setSpinningIndexes(picked.map((_, i) => i));
 
-      // Stop them one by one
       picked.forEach((name, idx) => {
         setTimeout(() => {
           setDisplayedNames(prev => {
@@ -36,14 +33,13 @@ export const SlotMachine: React.FC<Props> = ({ students, picked, isSpinning, onC
           setSpinningIndexes(prev => prev.filter(i => i !== idx));
 
           if (idx === picked.length - 1) {
-            setTimeout(onComplete, 500); // Wait a bit after last reel stops
+            setTimeout(onComplete, 500); 
           }
-        }, 1000 + idx * 800); // 1s for first, 1.8s for second, etc.
+        }, 1000 + idx * 800); 
       });
     }
   }, [isSpinning]);
 
-  // Simple slot reel effect using CSS animation (fast interval for unstopped reels)
   useEffect(() => {
     let interval: number;
     if (spinningIndexes.length > 0 && students.length > 0) {
@@ -55,30 +51,38 @@ export const SlotMachine: React.FC<Props> = ({ students, picked, isSpinning, onC
           });
           return next;
         });
-      }, 100); // Change name every 100ms for blur effect
+      }, 100); 
     }
     return () => clearInterval(interval);
   }, [spinningIndexes, students]);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '40px 0' }}>
-      <div className="glass-panel" style={{ display: 'flex', gap: '20px', padding: '30px', background: 'linear-gradient(to bottom, #2f3640, #353b48)', border: '5px solid #718093', borderRadius: '30px', boxShadow: 'inset 0 10px 20px rgba(0,0,0,0.5), 0 15px 30px rgba(0,0,0,0.5)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: 'var(--space-xxl) 0' }}>
+      <div style={{ 
+        display: 'flex', 
+        gap: 'var(--space-md)', 
+        padding: 'var(--space-xxl)', 
+        background: 'var(--color-canvas)', 
+        border: '1px solid var(--color-hairline)', 
+        borderRadius: 'var(--rounded-lg)', 
+        boxShadow: '0 4px 24px rgba(0,0,0,0.05)' 
+      }}>
         {students.length === 0 ? (
-          <div style={{ fontSize: '2rem', fontFamily: 'Jua', color: 'white' }}>명단을 추가해주세요</div>
+          <div className="text-headline">명단을 추가해주세요</div>
         ) : (
           displayedNames.map((name, idx) => (
             <div key={idx} style={{ 
               width: '120px', 
               height: '150px', 
-              background: '#f1f2f6', 
-              borderRadius: '15px', 
+              background: 'var(--color-surface-soft)', 
+              borderRadius: 'var(--rounded-md)', 
               display: 'flex', 
               alignItems: 'center', 
               justifyContent: 'center',
-              fontSize: '1.8rem',
-              fontFamily: 'Jua',
-              color: '#2d3436',
-              boxShadow: 'inset 0 5px 10px rgba(0,0,0,0.1)',
+              fontSize: '24px',
+              fontWeight: 600,
+              color: 'var(--color-ink)',
+              border: '1px solid var(--color-hairline)',
               overflow: 'hidden',
               position: 'relative'
             }}>

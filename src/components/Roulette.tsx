@@ -14,7 +14,15 @@ export const Roulette: React.FC<Props> = ({ students, picked, isSpinning, onComp
   const targetRotation = useRef<number>(0);
   const isAnimating = useRef<boolean>(false);
 
-  const colors = ['#ff9ff3', '#feca57', '#ff6b6b', '#48dbfb', '#1dd1a1', '#5f27cd', '#c8d6e5', '#ff9f43'];
+  // Figma inspired pastel colors for the wheel
+  const colors = [
+    'var(--color-block-lilac)', 
+    'var(--color-block-cream)', 
+    'var(--color-block-mint)', 
+    'var(--color-block-pink)', 
+    'var(--color-block-coral)', 
+    'var(--color-surface-soft)'
+  ];
 
   // Draw the wheel
   const drawWheel = (rotation: number) => {
@@ -32,10 +40,10 @@ export const Roulette: React.FC<Props> = ({ students, picked, isSpinning, onComp
     if (students.length === 0) {
       ctx.beginPath();
       ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-      ctx.fillStyle = '#f1f2f6';
+      ctx.fillStyle = '#ffffff';
       ctx.fill();
-      ctx.fillStyle = '#a4b0be';
-      ctx.font = '24px Jua';
+      ctx.fillStyle = '#000000';
+      ctx.font = '20px "Inter", sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText('명단을 추가해주세요', centerX, centerY);
@@ -52,8 +60,14 @@ export const Roulette: React.FC<Props> = ({ students, picked, isSpinning, onComp
       ctx.moveTo(centerX, centerY);
       ctx.arc(centerX, centerY, radius, startAngle, endAngle);
       ctx.closePath();
-      ctx.fillStyle = colors[i % colors.length];
+      
+      const computedColor = getComputedStyle(document.documentElement).getPropertyValue(colors[i % colors.length].replace('var(', '').replace(')', '')).trim() || colors[i % colors.length];
+      
+      // Fallback if computedStyle fails
+      ctx.fillStyle = computedColor.startsWith('#') || computedColor.startsWith('rgb') ? computedColor : '#f4ecd6'; 
       ctx.fill();
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 2;
       ctx.stroke();
 
       // Text
@@ -61,10 +75,8 @@ export const Roulette: React.FC<Props> = ({ students, picked, isSpinning, onComp
       ctx.translate(centerX, centerY);
       ctx.rotate(startAngle + sliceAngle / 2);
       ctx.textAlign = 'right';
-      ctx.fillStyle = '#fff';
-      ctx.font = 'bold 20px Jua';
-      ctx.shadowColor = 'rgba(0,0,0,0.3)';
-      ctx.shadowBlur = 4;
+      ctx.fillStyle = '#000000';
+      ctx.font = '600 20px "Inter", sans-serif';
       ctx.fillText(students[i], radius - 20, 5);
       ctx.restore();
     }
@@ -75,7 +87,7 @@ export const Roulette: React.FC<Props> = ({ students, picked, isSpinning, onComp
     ctx.lineTo(centerX + radius + 20, centerY - 15);
     ctx.lineTo(centerX + radius + 20, centerY + 15);
     ctx.closePath();
-    ctx.fillStyle = '#ff4757';
+    ctx.fillStyle = '#000000';
     ctx.fill();
   };
 
@@ -88,29 +100,20 @@ export const Roulette: React.FC<Props> = ({ students, picked, isSpinning, onComp
       isAnimating.current = true;
       const spins = 5; // number of full rotations
       
-      // We assume picking the first one in the picked list for the roulette pointer
-      // If multiple are picked, roulette will just point to the first one visually, 
-      // and we display all picked ones below.
       const targetIndex = students.indexOf(picked[0]);
       const sliceAngle = (2 * Math.PI) / students.length;
       
-      // Calculate rotation to land exactly on the target index slice
-      // Pointer is at 0 radians (right side). We want the center of the target slice to be at 0 radians.
-      // startAngle + sliceAngle/2 = 0 + 2PI*k -> rotation + index * sliceAngle + sliceAngle/2 = 2PI*k
       const targetRadian = (2 * Math.PI * spins) - (targetIndex * sliceAngle) - (sliceAngle / 2);
-      
-      targetRotation.current = currentRotation.current + targetRadian + (Math.random() * sliceAngle * 0.6 - sliceAngle * 0.3); // add slight randomness inside the slice
+      targetRotation.current = currentRotation.current + targetRadian + (Math.random() * sliceAngle * 0.6 - sliceAngle * 0.3); 
       
       let startTime: number | null = null;
-      const duration = 4000; // 4 seconds
+      const duration = 4000; 
 
       const animate = (timestamp: number) => {
         if (!startTime) startTime = timestamp;
         const progress = Math.min((timestamp - startTime) / duration, 1);
         
-        // Easing function: easeOutQuart
         const ease = 1 - Math.pow(1 - progress, 4);
-        
         currentRotation.current = currentRotation.current + (targetRotation.current - currentRotation.current) * ease;
         
         drawWheel(currentRotation.current);
@@ -132,11 +135,11 @@ export const Roulette: React.FC<Props> = ({ students, picked, isSpinning, onComp
   }, [isSpinning]);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '20px 0' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: 'var(--space-xl) 0' }}>
       <div style={{ position: 'relative' }}>
-        <canvas ref={canvasRef} width={400} height={400} style={{ filter: 'drop-shadow(0 10px 15px rgba(0,0,0,0.1))' }}></canvas>
-        <div style={{ position: 'absolute', top: '50%', right: '-20px', transform: 'translateY(-50%)', fontSize: '40px' }}>
-          ⬅️
+        <canvas ref={canvasRef} width={400} height={400}></canvas>
+        <div style={{ position: 'absolute', top: '50%', right: '-30px', transform: 'translateY(-50%)', fontSize: '30px' }}>
+          ◀
         </div>
       </div>
     </div>

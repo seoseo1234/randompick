@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { EthicsGate } from './components/EthicsGate';
 import { usePresenterStore } from './hooks/usePresenterStore';
 import { Header } from './components/Header';
 import { StudentManager } from './components/StudentManager';
@@ -11,6 +12,15 @@ import './index.css';
 type Mode = 'roulette' | 'slot' | 'fishing';
 
 function App() {
+  const [isEthicsAgreed, setIsEthicsAgreed] = useState<boolean>(() => {
+    return localStorage.getItem('ethicsAgreed') === 'true';
+  });
+
+  const handleEthicsAgree = () => {
+    localStorage.setItem('ethicsAgreed', 'true');
+    setIsEthicsAgreed(true);
+  };
+
   const store = usePresenterStore();
   const [mode, setMode] = useState<Mode>('roulette');
   const [count, setCount] = useState<number>(1);
@@ -46,6 +56,10 @@ function App() {
     setIsSpinning(false);
     setShowResult(true);
   };
+
+  if (!isEthicsAgreed) {
+    return <EthicsGate onAgree={handleEthicsAgree} />;
+  }
 
   return (
     <div style={{ width: '100%', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
